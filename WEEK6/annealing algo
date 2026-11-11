@@ -1,0 +1,59 @@
+import random
+import math
+
+# Objective function
+def function(x):
+    return x*x + 10*math.sin(x)
+
+# Initial solution
+current = random.uniform(-10, 10)
+
+# Best solution
+best = current
+
+# Initial temperature
+temperature = 100
+
+# Cooling rate
+cooling_rate = 0.95
+
+# Simulated Annealing
+while temperature > 0.01:
+
+    # Generate a new neighbouring solution
+    new = current + random.uniform(-1, 1)
+
+    # Check boundary
+    if new < -10:
+        new = -10
+    if new > 10:
+        new = 10
+
+    # Calculate fitness values
+    current_value = function(current)
+    new_value = function(new)
+
+    # Calculate difference
+    difference = new_value - current_value
+
+    # Accept better solution
+    if difference < 0:
+        current = new
+
+    # Accept worse solution with probability
+    else:
+        probability = math.exp(-difference / temperature)
+
+        if random.random() < probability:
+            current = new
+
+    # Update best solution
+    if function(current) < function(best):
+        best = current
+
+    # Reduce temperature
+    temperature = temperature * cooling_rate
+
+# Display result
+print("Best Solution:", best)
+print("Minimum Value:", function(best))
