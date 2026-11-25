@@ -1,0 +1,17 @@
+from sympy import symbols
+from sympy.logic.boolalg import (
+    Implies, to_cnf
+)
+
+# Define symbols
+P, Q, R = symbols('P Q R')
+
+# First Order Logic expression
+formula = Implies(P, Q) & Implies(Q, R)
+
+print("Original Expression:", formula)
+
+# Convert into CNF
+cnf = to_cnf(formula, simplify=True)
+
+print("CNF Expression:", cnf)
